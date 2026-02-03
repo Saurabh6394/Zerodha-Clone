@@ -26,9 +26,14 @@ const UserModel = require("./model/UserModel");
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+const corsOrigins = (process.env.CORS_ORIGINS || "http://localhost:3001,http://localhost:3000")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: ["http://localhost:3001", "http://localhost:3000"],
+    origin: corsOrigins,
     credentials: true,
   })
 );

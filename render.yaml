@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: zerodha-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: zerodha-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: "REPLACE_WITH_BACKEND_URL/api"
+
+  - type: web
+    name: zerodha-dashboard
+    env: static
+    rootDir: dashboard
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: "REPLACE_WITH_BACKEND_URL/api"
